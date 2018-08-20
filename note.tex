@@ -1,0 +1,102 @@
+\documentclass[]{article}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorlinks]{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\al}{\alpha}
+
+
+%opening
+\title{Classical Field Theory Notes}
+\author{Bruno Bucciotti}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Note intente a rendere più esplicita la notazione e contenere definizioni e alcune computazioni inerenti la teoria classica dei campi. Si seguono le note \href{https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=1002&context=lib_mono}{a questo link}. Non useremo in maniera sostanziale geometria differenziale, ma conoscere l'idea di flusso di un campo vettoriale può aiutare.
+\end{abstract}
+
+\section*{Introduzione}
+\subsection*{Spazio tempo, campi e jet space}
+Supponiamo uno spazio tempo 4 dimensionale piatto $\mathbb{R}^4$. Su di esso definisco dei campi, per ora solo scalari, $\phi : \mathbb{R}^4 \rightarrow \mathbb{R}$, le cui derivate indico $\phi_{,\al}$, $\phi_{,\al\beta}$, .. .\\
+Vorrò definire una lagrangiana funzione delle derivate k-esime dei campi e del punto in $\mathbb{R}^4$, a tal fine introduco il k-esimo $Jet$ $space$ $\mathcal{J}^k$, cioè uno spazio $\mathbb{R}^n$ in cui ho 4 dimensioni associate allo spazio tempo, una associata al campo, 4 associate alle 4 derivate prime del campo, altre 10 associate alle derivate seconde (ricordando Schwarz non sono 16 indipendenti), fino alle derivate k-esime.\\
+Dato un campo $\phi$ posso computare tutte le derivate in funzione del punto e rappresentare il campo come superficie (sezione) del jet space. Viceversa una generica superficie nel jet non è detto che sia un campo, ad esempio potrei fissare che per ogni punto $x\in \mathbb{R}^4$ vi sia un punto nel jet con le prime 4 coordinate date da $x$, la quinta (il campo) e le successive 4 (tutte le derivate prime) valgano $1$, cosa impossibile. L'idea è che nel jet tutte queste funzioni sono indipendenti fra loro e i vincoli vengono successivamente.
+\subsection*{Lagrangiana}
+Il jet space serve a definire la lagrangiana $\mathcal{L} : \mathcal{J}^k \rightarrow \mathbb{R}$, ad esempio la lagrangiana di Klein Gordon è $\mathcal{L} (x, \phi, \phi_{,\al}) = \frac{1}{2} (\phi_{,t}^2 - (\nabla \phi)^2 - m^2 \phi^2)$. Notare che qui $\phi$ è solo una coordinata nel jet space, dunque un numero. Dati 9 numeri posso calcolare il valore della lagrangiana.
+\subsection*{Due operatori utili}
+\paragraph{Derivata totale}
+E' un operatore che data una funzione $F : \mathcal{J}^k \rightarrow \mathbb{R}$ restituisce una funzione $D_\alpha F : \mathcal{J}^{k+1} \rightarrow \mathbb{R}$, dove $\alpha$ si riferisce a una delle 4 coordinate spazio-temporali.
+$$(D_\alpha F) (x, \phi, \phi_{\alpha}, .., \partial^{k+1}\phi) = \dfrac{\partial F}{\partial x^\alpha} + \dfrac{\partial F}{\partial \phi} \phi_{,\alpha} + \dfrac{\partial F}{\partial \phi_{,\beta}} \phi_{,\alpha \beta} + .. + \dfrac{\partial F}{\partial \phi_{\alpha_1 .. \alpha_k}} \phi_{,\alpha \alpha_1 .. \alpha_k}$$
+L'utilità della derivata totale si vede in questo esempio: fissiamo un campo $\phi$ e mettiamolo dentro la lagrangiana $\mathcal{L}$. Otteniamo una funzione dello spazio-tempo che possiamo derivare normalmente in $x^\alpha$.
+
+$$\dfrac{\partial \mathcal{L}(*, \phi(*), \phi_{,\alpha}(*))}{\partial x^\alpha} (x) = 
+\dfrac{\partial \mathcal{L}}{\partial x^\alpha}(x, \phi(x), ..) + \dfrac{\partial \mathcal{L}}{\partial \phi}(x, \phi(x), ..) \phi_{,\alpha}(x) + .. = 
+(D_\alpha \mathcal{L}) (x, \phi(x), ..)$$
+\paragraph{Variazione}
+Un operatore che, stavolta fissando a priori un campo $\phi$, data una funzione $F : \mathcal{J}^k \rightarrow \mathbb{R}$ restituisce una funzione $\delta F : \mathcal{J}^k \rightarrow \mathbb{R}$ in cui le coordinate cambiano nome perchè avranno ruoli diversi nel seguito.
+$$(\delta F)(x, \delta \phi, \delta \phi_{,\alpha}, ..) = \dfrac{\partial \mathcal{L}}{\partial \phi}(x, \phi(x), ..) \delta \phi + \dfrac{\partial \mathcal{L}}{\partial \phi_{,\alpha}}(x, \phi(x), ..) \delta \phi_{,\alpha} + ..$$
+Enfatizzo che il jet non contiene le coordinate $\phi$ e che tale campo compare sempre valutato in $x$. L'utilità di questo operatore viene mostrata nella prossima sezione.
+\section*{L'azione}
+\subparagraph{Definizione}
+L'azione $S$ è un funzionale della lagrangiana: fissato $\phi$ ho $S[\phi] = \int \mathcal{L}(x,\phi(x), ..) d^4x$. Nel seguito supponiamo il campo fissato ai tempi $t_1$ e $t_2$, e di volerlo trovare nell'intervallo $(t_1,\,t_2)$. Il campo decade sempre abbastanza rapidamente a infinito. Un fatto fisico fondamentale è che l'azione è estremata per le traiettorie fisiche.
+\subparagraph{Punti critici}
+Questo si precisa, dato un campo $\phi$, definendo molti campi e parametrizzandoli con $s\in(-\epsilon, \epsilon)$, cioè $\psi (s, x)$ funzione di $(-\epsilon,\epsilon) \times \mathbb{R}^4$ liscia tale che fissato s si abbia un campo sullo spazio tempo, per $s=0$ si recuperi $\phi$, mentre $\forall s$ con $x$ sul bordo $\psi(s, x) = \phi(x)$. $\phi$ è un punto critico del funzionale $S$ se $\forall \psi$ nelle ipotesi sopra si ha $\dfrac{d}{ds}|_{s=0} S[\psi(s, *)] = 0$. Intuitivamente $\phi$ fissato è punto critico se,  comunque sia scelta la variazione, $S$ con cambia. Deriviamo ora le equazioni di Eulero Lagrange.
+\subparagraph{Euler Lagrange equations}
+Per cercare punti critici cerco un'equazione che $\phi$ debba soddisfare per essere punto critico. Lo faccio nel caso particolare in cui $\mathcal{L} = \mathcal{L}(x, \phi, \phi_{,\al})$, rimandando il caso generale all'appendice. Per procedere scelgo un tipo particolare di $\psi (s, x) = \phi(x) + s \delta \phi(x)$ con $\delta \phi$ qualunque.
+$$\dfrac{d}{ds}|_{s=0} \int_\mathcal{V} \mathcal{L} (x, (\phi + s \delta \phi) (x), (\phi + s \delta \phi)_{,\al} (x)) d^4x = $$
+$$\int_\mathcal{V} \dfrac{d}{ds}|_{s=0}\mathcal{L} (x, (\phi + s \delta \phi) (x), (\phi + s \delta \phi)_{,\al} (x)) d^4x = $$
+$$\int_\mathcal{V} \dfrac{\partial \mathcal{L}}{\partial \phi} (x, \phi (x), \phi_{,\al} (x))\, \delta \phi(x) + \dfrac{\partial \mathcal{L}}{\partial \phi_{,\al}} (x, \phi (x), \phi_{,\al} (x)) \delta \phi_{,\al}(x) d^4x = $$
+$$\int_\mathcal{V} \delta \mathcal{L} (x, \delta \phi (x), \delta \phi_{,\al} (x)) d^4x$$
+Il fatto che compaia $\delta \mathcal{L}$ è del tutto generale, così come il fatto che, integrando per parti, si possa portare l'integrale nella forma
+$$\int_\mathcal{V} (\mathcal{E}(\mathcal{L})) \delta \phi + D_\al V^\al d^4x$$
+dove $\mathcal{E}(\mathcal{L})$ sono le equazioni di Eulero Lagrange per $\phi$ (in cui non compare mai $\delta \phi$) e $V^\al$ è un campo vettoriale di cui si prende la divergenza.
+Dunque
+\begin{equation} \label{DeltaLExpression}
+	\delta \mathcal{L}(x, \delta \phi, ..) = \mathcal{E}(\mathcal{L})(x) \delta \phi + D_\al V^\al
+\end{equation}
+Con le condizioni al bordo e il teorema di Gauss il secondo termine si cancella, mentre il primo, poichè $\delta \phi$ è arbitrario, impone che $\mathcal{E}(\mathcal{L}) = 0$. Si può dimostrare che, viceversa, se $\phi$ rispetta le E.L. allora comunque sia scelto $\psi$ come sopra l'azione risulterà stazionaria, cioè le EL sono condizione necessaria e sufficiente perchè $\phi$ sia punto critico.
+
+\section*{Simmetrie}
+\subsection*{Definizioni}
+\paragraph{Variational symmetry} Dato un campo qualsiasi $\phi$ una trasformazione $F$ (con $F(\phi)$ un nuovo campo) è detta simmetria variazionale se $\mathcal{L} (x, \phi, ..) = \mathcal{L} (x, F(\phi), ..)$.
+\subparagraph{Discreta} Non vi è un parametro a descrivere varie trasformazioni. Ad esempio $\phi \rightarrow -\phi$.
+\subparagraph{Continua} Viene definita, per ogni campo $\phi$, una famiglia di campi parametrizzati da $\lambda$, cioè $\phi_\lambda$ con $\phi_0 = \phi$ e, $\forall \lambda$
+$$\mathcal{L}(x, \phi_\lambda(x), \phi_{\lambda,\al}(x), ..) = \mathcal{L} (x, \phi(x), \phi_{,\al}(x), ..)$$
+Enfatizzo che, mentre per i punti critici dell'azione si fissa un campo e si guardano tutte le variazioni possibili, qui per ogni campo si definisce una famiglia di variazioni.
+Altro parlando di simmetrie infinitesime.
+\paragraph{Divergence symmetry} Se la lagrangiana, invece di essere invariante, cambia per una divergenza $D_\al V^\al$. Notare che l'aggiunta di una divergenza non cambia le equazioni di Eulero Lagrange.
+
+\subsection*{Noether theorem}
+\paragraph{Infinitesimal symmetry}
+\subparagraph{Introduzione} Data una simmetria variazionale continua ho $\delta \phi = \left(\dfrac{\partial \phi_\lambda}{\partial \lambda}\right)|_{\lambda=0}$, un campo scalare sullo spazio tempo costruito a partire da $\phi$ e le sue derivate. Ricordo che l'equazione differenziale che definisce $\delta\phi$ è sufficiente, noto $\delta \phi$, a determinare almeno localmente $\phi$, risolvendo una ODE del primo ordine. Può essere utile nel seguito pensare $\phi$ come un punto nello spazio dei campi, $\phi_\lambda$ come una curva in tale spazio e $\delta \phi$ come il vettore tangente alla curva in un punto. $\phi_\lambda$ al variare di $\lambda$ e $x$ è il flusso del campo $\delta \phi$. Ricordo inoltre che questo $\delta \phi$ non c'entra con quello delle variazioni e dei punti critici, almeno per ora.\\
+
+\subparagraph{Una equivalenza}
+Considero una lagrangiana $\mathcal{L}$ che ha simmetria variazionale continua $\phi \rightarrow \phi_\lambda$. Allora ho che
+
+\begin{equation} \label{PartialLZero}
+\dfrac{\partial \mathcal{L} (x, \phi_\lambda(x), ..)}{\partial \lambda}|_{\lambda=0} = 0
+\end{equation}
+
+e viceversa se vale \eqref{PartialLZero} $\forall\, x$ ho che $\phi \rightarrow \phi_\lambda$ è simmetria variazionale. Intuitivamente questo è perchè, seppure la derivata è calcolata in $\lambda=0$, la \eqref{PartialLZero} vale per qualunque campo. Formalmente
+$$\dfrac{\partial \mathcal{L} (x, \phi_s(x), ..)}{\partial s} = \lim_{\lambda \rightarrow 0} \dfrac{\mathcal{L}(x, \phi_{s+\lambda}(x), ..) - \mathcal{L}(x, \phi_{s}(x), ..)}{\lambda} = \dfrac{\partial \mathcal{L} (x, \phi_{s+\lambda}, ..)}{\partial \lambda}|_{\lambda=0} = 0$$
+dove nell'ultimo passaggio applico \eqref{PartialLZero} a $\phi_s$.\\
+
+\subparagraph{$\delta \mathcal{L} = 0$}
+Ho anche che, fissato $\phi$,
+$$\dfrac{\partial \mathcal{L} (x, \phi_\lambda(x), ..)}{\partial \lambda}|_{\lambda=0} = \dfrac{\partial \mathcal{L}}{\partial \phi} (x, \phi(x), ..) \left(\dfrac{\partial \phi_\lambda}{\partial \lambda}\right)|_{\lambda=0}(x) + \dfrac{\partial \mathcal{L}}{\partial \phi_{,\al}}(x, \phi(x), ..) \left(\dfrac{\partial \phi_{\lambda,\al}}{\partial \lambda}\right)|_{\lambda=0}(x) .. = $$
+$$\dfrac{\partial \mathcal{L}}{\partial \phi}(x, \phi(x)) \delta \phi (x) + \dfrac{\partial \mathcal{L}}{\partial \phi_{,\al}}(x, \phi(x)) \delta \phi_{,\al}(x) + .. = \delta \mathcal{L} (x, \delta \phi (x), ..) = 0$$
+che mi ricollega alla notazione precedente per $\delta \phi$ riguardo i punti critici. Se si valuta $\delta \mathcal{L}$ nel campo $\delta \phi$ e le sue derivate si ottiene $0$.
+\begin{equation} \label{DeltaLZero}
+	\delta \mathcal{L} (x, \delta \phi (x), ..) = 0
+\end{equation}
+
+\subparagraph{Conclusione}
+Sia $\mathcal{L}$ lagrangiana con simmetria $\phi \rightarrow \phi_\lambda$. Scelgo $\phi$ che soddisfi le equazioni del moto. Definisco per tale campo $\phi$ il campo $\delta \phi$ come sopra. Allora ho, valutando la \eqref{DeltaLExpression} in $\delta \phi$ e usando la  \eqref{DeltaLZero}
+$$D_\al V^\al = 0$$
+cioè $V^\al$ è una corrente conservata. Noto che questa quantità dipende dalla lagrangiana e dalla simmetria (poichè compare $\delta \phi$).\\
+Osservo che se la simmetria non fosse una simmetria variazionale esatta ma solo a meno di una divergenza avrei che $\delta \mathcal{L}$ sarebbe una divergenza $D_\al W^\al$ (invece che 0) e a conservarsi sarebbe quindi $V^\al - W^\al$.
+
+\end{document}
